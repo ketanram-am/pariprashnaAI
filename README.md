@@ -1,226 +1,161 @@
-# 🕉️ Pariprashna AI – Enquire Within
+🕉️ Pariprashna AI – Enquire Within
 
-An AI-powered, multilingual chatbot that provides **authentic Bhagavad Gita-based guidance** for real-life problems, with verified shloka references and blockchain-backed integrity.
+Smart Contract Deployed ✅
+Contract Address: 0x95d12c98195c126d18a54b3a0de1c62b0c23845e
 
----
+🚀 Overview
 
-## 🚀 Overview
+Pariprashna AI – Enquire Within is an AI-powered chatbot inspired by the teachings of the Bhagavad Gita, designed to help users navigate real-life challenges through timeless wisdom.
 
-Pariprashna AI is a domain-specific chatbot designed to bridge **modern human challenges** with **timeless wisdom from the Bhagavad Gita**.
+It combines:
 
-Unlike generic AI chatbots, this system:
+🧠 AI (LLM-based understanding)
+🌐 Multilingual support
+📘 Sanskrit learning mode
+🔗 Blockchain logging (EVM)
 
-* Grounds every response in **real Bhagavad Gita verses**
-* Displays **chapter and verse references**
-* Provides **practical, actionable advice**
-* Supports **multilingual interaction**
-* Ensures **response integrity using blockchain hashing**
+Built as a hackathon-ready prototype, the system focuses on simplicity, usability, and meaningful interaction.
 
----
+🎯 Features
+🧠 Context-Aware AI Guidance
+Understands user emotions (stress, confusion, purpose, etc.)
+Provides relevant Bhagavad Gita shlokas
+Gives practical advice, not just philosophy
+🌐 Multilingual Support
 
-## 🎯 Key Features
+Supports 3 languages:
 
-### 🧠 Intelligent Problem Understanding
+English 🇬🇧
+Hindi 🇮🇳
+Kannada 🟡
 
-* Uses AI (OpenAI/Gemini) to analyze user input
-* Classifies problems (stress, fear, confusion, discipline, existential)
+Flow:
 
-### 📖 Authentic Gita-Based Responses
+User Input → Translate → AI Processing → Translate Back → Output
+📘 Learn Mode (Unique Feature)
+Toggle ON/OFF
+When ON:
+Provides word-by-word Sanskrit breakdown
+When OFF:
+Keeps response concise
+🔗 Blockchain Logging (EVM Compatible)
 
-* Sanskrit **shloka**
-* 📍 Chapter & Verse reference
-* 📖 Simple meaning
-* 💡 Practical life advice
+Each response is hashed:
 
-### 🌍 Multilingual Support
-
-* English (EN)
-* हिंदी (HI)
-* ಕನ್ನಡ (KN)
-
-> Input can be in any language, output is delivered in selected language.
-
----
-
-### 🎓 Learn Mode (Sanskrit Breakdown)
-
-* Toggle ON to view **word-by-word Sanskrit meaning**
-* Helps users deeply understand each verse
-
----
-
-### ⛓ Blockchain Logging
-
-* Each response is hashed using SHA-256
-* Stored on EVM-compatible blockchain
-* Ensures **tamper-proof responses**
-
-Output includes:
-
-```
-Hash: ab12cd34ef
-Tx: logged / not logged
-```
-
----
-
-## 🏗️ Tech Stack
-
-### Backend
-
-* FastAPI
-* OpenAI / Gemini API
-* deep-translator
-* web3.py
-
-### Frontend
-
-* React
-* Tailwind CSS
-
----
-
-## 🧩 Project Structure
-
-```
-pariprashna-ai/
-│
-├── backend/
-│   ├── main.py
-│   ├── gita_data.py
-│   ├── blockchain.py
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/Chat.jsx
-│   │   └── styles.css
-│   └── package.json
-```
-
----
-
-## ⚙️ How It Works
-
-1. User inputs query (EN / HI / KN)
-2. Input translated → English
-3. AI analyzes and classifies intent
-4. System retrieves relevant Bhagavad Gita verse:
-
-   * Primary: local dataset
-   * Fallback: AI (strict validation)
-5. Generates structured response:
-
-   * Shloka
-   * Reference
-   * Meaning
-   * Advice
-6. Response translated → selected language
-7. Hash generated and logged on blockchain
-
----
-
-## ▶️ Running Locally
-
-### 🔧 Backend
-
-```bash
+keccak(user_input + response)
+Logged on blockchain via smart contract
+Returns transaction hash (tx_hash)
+💬 Chat Interface
+Clean, modern UI
+Card-based response layout:
+🕉 Shloka
+📖 Meaning
+📚 Word Meaning (Learn Mode)
+💡 Advice
+🧱 Tech Stack
+Backend
+FastAPI
+OpenAI / Gemini (LLM)
+deep-translator
+web3.py
+Frontend
+React
+Tailwind CSS
+Blockchain
+EVM-compatible chain (Shardeum / testnet)
+📦 API Endpoints
+🔹 POST /chat
+Request:
+{
+  "message": "I feel anxious about my future",
+  "language": "en",
+  "learn_mode": true
+}
+Response:
+{
+  "shloka": "...",
+  "meaning": "...",
+  "word_meaning": "...",
+  "advice": "...",
+  "tx_hash": "0x..."
+}
+🔹 POST /blockchain/log-chat
+Request:
+{
+  "hash": "string"
+}
+Response:
+{
+  "tx_hash": "0x..."
+}
+⚙️ Setup Instructions
+1️⃣ Clone Repository
+git clone <your-repo-url>
+cd pariprashna-ai
+2️⃣ Backend Setup
 cd backend
+
+python -m venv venv
+venv\Scripts\activate   # Windows
+
 pip install -r requirements.txt
-uvicorn main:app --reload
-```
 
----
+Create .env file:
 
-### 💻 Frontend
+OPENAI_API_KEY=your_key
+BLOCKCHAIN_RPC_URL=your_rpc
+PRIVATE_KEY=your_private_key
+CONTRACT_ADDRESS=0x95d12c98195c126d18a54b3a0de1c62b0c23845e
+CHAIN_ID=your_chain_id
 
-```bash
+Run backend:
+
+uvicorn main:app --reload --port 8081
+3️⃣ Frontend Setup
 cd frontend
+
 npm install
 npm run dev
-```
 
----
+Open:
 
-## 🌍 Language Toggle (UI)
+http://localhost:5173
+🎨 UI Design
 
-The app includes **3 fixed toggle buttons**:
+Light theme with warm colors:
 
-```
-[ English ] [ हिंदी ] [ ಕನ್ನಡ ]
-```
+Background: #FFF7ED
+Primary: #F97316
+Accent: #FDBA74
+Text: #1F2937
+🧪 Demo Flow (Recommended)
 
-* Only one active at a time
-* Default: English
-* Sanskrit text is never translated
+Ask emotional question:
 
----
+“I feel anxious about my future”
 
-## 📦 Sample Response
+Show AI response
+Enable Learn Mode
+Ask again → show Sanskrit breakdown
+Switch language (Hindi/Kannada)
+Show blockchain tx_hash
+⚠️ Notes
+This is a prototype, not production-ready
+No vector DB / embeddings used
+Focus is on simplicity + demo impact
+🌟 Future Improvements
+Add semantic search for shlokas
+Voice input/output
+User journaling + history
+Better blockchain indexing
+🙏 Inspiration
 
-```
-🕉 Shloka:
-देहिनोऽस्मिन्यथा देहे कौमारं यौवनं जरा...
+Inspired by the timeless wisdom of the Bhagavad Gita and the concept of Pariprashna — deep, sincere inquiry.
 
-📍 Reference:
-Bhagavad Gita Chapter 2, Verse 13
+👨‍💻 Author
 
-📖 Meaning:
-Just as the soul passes through childhood, youth, and old age...
+Built for hackathon by a developer exploring:
 
-💡 Advice:
-Do not fear change. Your true identity is beyond the body.
-
-🔗 Source:
-Based on Bhagavad Gita Chapter 2, Verse 13
-
-Hash: ab12cd34ef
-Tx: logged
-```
-
----
-
-## ⚠️ Constraints
-
-* No database used
-* No vector search
-* Minimal dependencies
-* Designed for **hackathon demo reliability**
-
----
-
-## 🎯 Vision
-
-> “We do not generate scripture — we interpret it.”
-
-Pariprashna AI aims to make the Bhagavad Gita:
-
-* Accessible
-* Understandable
-* Practically applicable in daily life
-
----
-
-## 🙏 Acknowledgment
-
-Inspired by the timeless teachings of the **Bhagavad Gita** and the need to make spiritual wisdom accessible through modern technology.
-
----
-
-## 📌 Future Improvements
-
-* Voice input & output 🎤
-* Daily shloka recommendations 📅
-* User emotion analytics 📊
-* Expanded verse dataset 📚
-
----
-
-## 👨‍💻 Author
-
-Built for hackathons with clarity, simplicity, and impact in mind.
-
----
-
-✨ *Enquire within. The answers are already there.*
+AI
+Spirituality
+Real-world impact
