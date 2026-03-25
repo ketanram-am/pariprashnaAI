@@ -14,7 +14,12 @@ class ChatResponse(BaseModel):
     translation: str
     word_meaning: str = ""
     advice: str
-    transaction_hash: Optional[str] = None
+    reference: str
+    source: str
+    hash: str
+    tx_status: str
+    tx_hash: Optional[str] = None
+    formatted: str
 
 
 class BlockchainLogRequest(BaseModel):

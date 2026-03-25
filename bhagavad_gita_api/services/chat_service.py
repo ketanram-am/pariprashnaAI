@@ -45,27 +45,30 @@ def build_chat_response(
     try:
         verse_payload = get_verse(verse_reference, db=db)
     except Exception:
-        return _generate_llm_fallback_response(
-            message=message,
-            learn_mode=learn_mode,
-            target_language=target_language,
-            db=db,
+        verse_payload = None
+    if verse_payload:
+        advice = _generate_advice(
+            english_message=english_message,
+            verse_reference=verse_reference,
+            translation=verse_payload.translation,
         )
-    advice = _generate_advice(
-        english_message=english_message,
-        verse_reference=verse_reference,
-        translation=verse_payload.translation,
-    )
 
-    english_response = {
-        "shloka": verse_payload.shloka,
-        "translation": verse_payload.translation,
-        "word_meaning": verse_payload.word_meaning if learn_mode else "",
-        "advice": advice,
-    }
+        english_response = {
+            "shloka": verse_payload.shloka,
+            "translation": verse_payload.translation,
+            "word_meaning": verse_payload.word_meaning if learn_mode else "",
+            "advice": advice,
+        }
+    else:
+        english_response = _generate_fallback_response(
+            english_message=english_message,
+            verse_reference=verse_reference,
+            learn_mode=learn_mode,
+        )
 
     localized_response = translate_response_fields(english_response, output_language)
     response_hash = compute_chat_hash(message, localized_response)
+    short_hash = response_hash.replace("0x", "")[:10]
 
     transaction_hash = None
     try:
@@ -73,53 +76,47 @@ def build_chat_response(
     except BlockchainError:
         transaction_hash = None
 
-    response = {
+    tx_status = "logged" if transaction_hash else "not logged"
+    reference_line = f"Bhagavad Gita Chapter {verse_reference.chapter}, Verse {verse_reference.verse}"
+    source_line = reference_line
+
+    formatted = _format_response(
+        shloka=localized_response["shloka"],
+        reference=reference_line,
+        meaning=localized_response["translation"],
+        word_meaning=localized_response.get("word_meaning", ""),
+        advice=localized_response["advice"],
+        source=source_line,
+        short_hash=short_hash,
+        tx_status=tx_status,
+        tx_hash=transaction_hash,
+        include_word_meaning=learn_mode,
+    )
+
+    return {
         "shloka": localized_response["shloka"],
         "translation": localized_response["translation"],
         "word_meaning": localized_response.get("word_meaning", ""),
         "advice": localized_response["advice"],
+        "reference": reference_line,
+        "source": source_line,
+        "hash": short_hash,
+        "tx_status": tx_status,
+        "tx_hash": transaction_hash,
+        "formatted": formatted,
     }
 
-    if transaction_hash:
-        response["transaction_hash"] = transaction_hash
 
-    return response
-
-
-def _generate_llm_fallback_response(
-    message: str,
+def _generate_fallback_response(
+    english_message: str,
+    verse_reference: VerseReference,
     learn_mode: bool,
-    target_language: Optional[str],
-    db: Optional[Session],
-) -> Dict[str, Optional[str]]:
-    english_message, source_language = translate_inbound_text(message)
-    output_language = resolve_output_language(target_language, source_language)
-
-    if settings.OPENAI_API_KEY and OpenAI is not None:
-        try:
-            response = _generate_full_with_openai(english_message, learn_mode)
-            localized = translate_response_fields(response, output_language)
-            return {
-                "shloka": localized["shloka"],
-                "translation": localized["translation"],
-                "word_meaning": localized.get("word_meaning", ""),
-                "advice": localized["advice"],
-            }
-        except Exception:
-            pass
-
-    fallback = {
-        "shloka": "Verse unavailable. Please retry.",
-        "translation": "Translation unavailable due to a temporary fetch issue.",
-        "word_meaning": "" if not learn_mode else "Word meanings unavailable for now.",
-        "advice": _fallback_advice(english_message, ""),
-    }
-    localized = translate_response_fields(fallback, output_language)
+) -> Dict[str, str]:
     return {
-        "shloka": localized["shloka"],
-        "translation": localized["translation"],
-        "word_meaning": localized.get("word_meaning", ""),
-        "advice": localized["advice"],
+        "shloka": "I am not fully certain of the exact verse reference.",
+        "translation": "I am not fully certain of the exact verse reference.",
+        "word_meaning": "" if not learn_mode else "I am not fully certain of the exact verse reference.",
+        "advice": _fallback_advice(english_message, ""),
     }
 
 
@@ -186,44 +183,50 @@ Verse translation:
     )
 
 
-def _generate_full_with_openai(english_message: str, learn_mode: bool) -> Dict[str, str]:
-    client = OpenAI(api_key=settings.OPENAI_API_KEY)
-    prompt = f"""
-You are a Bhagavad Gita assistant. When direct verse fetching fails, choose a relevant verse yourself.
-Return JSON with keys: shloka, translation, word_meaning, advice.
 
-Rules:
-- shloka should be in Devanagari.
-- translation must be in English.
-- If learn_mode is false, set word_meaning to an empty string.
-- advice must be 2-3 practical sentences.
 
-User message:
-{english_message}
+def _format_response(
+    shloka: str,
+    reference: str,
+    meaning: str,
+    word_meaning: str,
+    advice: str,
+    source: str,
+    short_hash: str,
+    tx_status: str,
+    tx_hash: Optional[str],
+    include_word_meaning: bool,
+) -> str:
+    lines = [
+        "Shloka:",
+        shloka or "I am not fully certain of the exact verse reference.",
+        "",
+        "Reference:",
+        reference,
+        "",
+        "Meaning:",
+        meaning,
+    ]
 
-learn_mode:
-{str(learn_mode).lower()}
-""".strip()
+    if include_word_meaning:
+        lines.extend(["", "Word Meaning:", word_meaning or ""])
 
-    completion = client.chat.completions.create(
-        model=settings.OPENAI_MODEL,
-        temperature=0.5,
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": "Return only JSON."},
-            {"role": "user", "content": prompt},
-        ],
+    lines.extend(
+        [
+            "",
+            "Advice:",
+            advice,
+            "",
+            "Source:",
+            source,
+            "",
+            f"Hash: {short_hash}",
+            f"Tx: {tx_status}",
+            f"Tx Hash: {tx_hash if tx_hash else 'null'}",
+        ]
     )
 
-    content = completion.choices[0].message.content or "{}"
-    data = _extract_json_payload(content)
-
-    return {
-        "shloka": str(data.get("shloka") or "Verse unavailable."),
-        "translation": str(data.get("translation") or "Translation unavailable."),
-        "word_meaning": str(data.get("word_meaning") or "") if learn_mode else "",
-        "advice": str(data.get("advice") or _fallback_advice(english_message, "")),
-    }
+    return "\n".join(lines)
 
 
 def _extract_json_payload(content: str) -> Dict[str, str]:

@@ -1,4 +1,5 @@
 import random
+import re
 from dataclasses import dataclass
 from typing import Optional
 
@@ -176,12 +177,28 @@ def _parse_vedabase_html(html: str) -> Optional[VersePayload]:
 
 
 def _extract_section_text(soup: BeautifulSoup, title: str) -> str:
+    lower_title = title.lower()
+    class_match = soup.find(
+        lambda tag: tag.get("class")
+        and any(lower_title in cls.lower() for cls in tag.get("class", []))
+    )
+    if class_match:
+        text = class_match.get_text(" ", strip=True)
+        if text:
+            return text
+
+    id_match = soup.find(id=re.compile(lower_title))
+    if id_match:
+        text = id_match.get_text(" ", strip=True)
+        if text:
+            return text
+
     heading = soup.find(
         lambda tag: tag.name in {"h1", "h2", "h3", "h4"}
-        and title.lower() in tag.get_text(" ", strip=True).lower()
+        and lower_title in tag.get_text(" ", strip=True).lower()
     )
     if not heading:
-        heading_text = soup.find(string=lambda text: text and title.lower() in text.lower())
+        heading_text = soup.find(string=lambda text: text and lower_title in text.lower())
         if heading_text:
             heading = heading_text.parent
     if not heading:
@@ -209,4 +226,15 @@ def _extract_section_text(soup: BeautifulSoup, title: str) -> str:
 
 
 def _clean_text_block(text: str) -> str:
-    return " ".join(text.split())
+    cleaned = " ".join(text.split())
+    if cleaned.lower().startswith("devanagari "):
+        cleaned = cleaned.split(" ", 1)[1]
+    if cleaned.lower().startswith("synonyms "):
+        cleaned = cleaned.split(" ", 1)[1]
+    if cleaned.lower().startswith("translation "):
+        cleaned = cleaned.split(" ", 1)[1]
+    if cleaned.lower().startswith("translation:"):
+        cleaned = cleaned.split(":", 1)[1].strip()
+    cleaned = cleaned.replace("Synonyms—", "").replace("Synonyms -", "").replace("Synonyms-", "")
+    cleaned = cleaned.replace("Translation—", "").replace("Translation -", "").replace("Translation-", "")
+    return cleaned

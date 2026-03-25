@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Sans:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Telugu:wght@400;600&display=swap");
 
 :root {
   color-scheme: light;
@@ -266,6 +266,42 @@ textarea {
   border-radius: 24px 24px 24px 8px;
   background: var(--panel-strong);
   border: 1px solid var(--line);
+}
+
+.response-meta {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.response-section {
+  margin-top: 16px;
+}
+
+.response-section p:last-child {
+  margin: 0;
+  line-height: 1.75;
+  font-family: "Noto Sans", "Cormorant Garamond", serif;
+}
+
+.shloka-text {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  font-family: "Noto Serif Devanagari", "Noto Sans Telugu", "Noto Sans Kannada",
+    "Noto Sans", "Cormorant Garamond", serif;
+}
+
+.word-meaning p:last-child {
+  font-style: italic;
+  color: #5b4334;
+}
+
+.advice p:last-child {
+  font-weight: 600;
 }
 
 .response-meta,

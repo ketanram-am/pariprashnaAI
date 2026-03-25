@@ -174,33 +174,42 @@ function App() {
               ) : (
                 <article key={message.id} className="message-row assistant-row">
                   <div className="assistant-card">
+                    <div className="response-meta">
+                      <span>{message.content.reference}</span>
+                    </div>
+
                     <div className="shloka-block">
                       <p className="section-label">Shloka</p>
                       <p className="shloka-text">{message.content.shloka}</p>
                     </div>
 
                     <div className="response-section">
-                      <p className="section-label">Translation</p>
+                      <p className="section-label">Meaning</p>
                       <p>{message.content.translation}</p>
                     </div>
 
                     {message.content.word_meaning ? (
-                      <div className="response-section">
+                      <div className="response-section word-meaning">
                         <p className="section-label">Word Meaning</p>
                         <p>{message.content.word_meaning}</p>
                       </div>
                     ) : null}
 
-                    <div className="response-section">
+                    <div className="response-section advice">
                       <p className="section-label">Advice</p>
                       <p>{message.content.advice}</p>
                     </div>
 
-                    {message.content.transaction_hash ? (
-                      <div className="chain-row">
-                        <span>Tx: {shortenValue(message.content.transaction_hash)}</span>
-                      </div>
-                    ) : null}
+                    <div className="chain-row">
+                      <span>Hash: {message.content.hash}</span>
+                      <span>Tx: {message.content.tx_status}</span>
+                      <span>
+                        Tx Hash:{" "}
+                        {message.content.tx_hash
+                          ? shortenValue(message.content.tx_hash)
+                          : "null"}
+                      </span>
+                    </div>
                   </div>
                 </article>
               )
