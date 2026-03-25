@@ -16,9 +16,10 @@ LANGUAGE_ALIASES = {
     "english": "en",
     "hindi": "hi",
     "telugu": "te",
+    "kannada": "kn",
 }
 
-SUPPORTED_OUTPUT_LANGUAGES = {"en", "hi", "te"}
+SUPPORTED_OUTPUT_LANGUAGES = {"en", "hi", "te", "kn"}
 
 
 def normalize_language(language: Optional[str]) -> str:
@@ -51,7 +52,7 @@ def translate_response_fields(
         return response_fields
 
     translated_fields = dict(response_fields)
-    for field_name in ("meaning", "word_meaning", "advice"):
+    for field_name in ("translation", "word_meaning", "advice"):
         value = translated_fields.get(field_name, "")
         if value:
             translated_fields[field_name] = translate_text(

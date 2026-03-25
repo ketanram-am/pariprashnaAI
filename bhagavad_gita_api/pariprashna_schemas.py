@@ -10,14 +10,10 @@ class ChatRequest(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    reference: str
     shloka: str
-    meaning: str
+    translation: str
     word_meaning: str = ""
     advice: str
-    source_language: str = "en"
-    response_language: str = "en"
-    response_hash: str
     transaction_hash: Optional[str] = None
 
 

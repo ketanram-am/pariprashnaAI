@@ -1,5 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
+from bhagavad_gita_api.api import deps
 from bhagavad_gita_api.pariprashna_schemas import (
     BlockchainLogRequest,
     BlockchainLogResponse,
@@ -18,7 +20,7 @@ router = APIRouter(tags=["Pariprashna AI"])
 
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest, db: Session = Depends(deps.get_db)):
     if not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
 
@@ -26,6 +28,7 @@ async def chat(request: ChatRequest):
         message=request.message,
         learn_mode=request.learn_mode,
         target_language=request.target_language,
+        db=db,
     )
 
 

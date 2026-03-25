@@ -14,6 +14,7 @@ const LANGUAGE_OPTIONS = [
   { value: "en", label: "English" },
   { value: "hi", label: "Hindi" },
   { value: "te", label: "Telugu" },
+  { value: "kn", label: "Kannada" },
 ];
 
 function App() {
@@ -173,19 +174,14 @@ function App() {
               ) : (
                 <article key={message.id} className="message-row assistant-row">
                   <div className="assistant-card">
-                    <div className="response-meta">
-                      <span>{message.content.reference}</span>
-                      <span>{message.content.response_language?.toUpperCase()}</span>
-                    </div>
-
                     <div className="shloka-block">
                       <p className="section-label">Shloka</p>
                       <p className="shloka-text">{message.content.shloka}</p>
                     </div>
 
                     <div className="response-section">
-                      <p className="section-label">Meaning</p>
-                      <p>{message.content.meaning}</p>
+                      <p className="section-label">Translation</p>
+                      <p>{message.content.translation}</p>
                     </div>
 
                     {message.content.word_meaning ? (
@@ -200,15 +196,11 @@ function App() {
                       <p>{message.content.advice}</p>
                     </div>
 
-                    <div className="chain-row">
-                      <span>Hash: {shortenValue(message.content.response_hash)}</span>
-                      <span>
-                        Tx:{" "}
-                        {message.content.transaction_hash
-                          ? shortenValue(message.content.transaction_hash)
-                          : "not logged"}
-                      </span>
-                    </div>
+                    {message.content.transaction_hash ? (
+                      <div className="chain-row">
+                        <span>Tx: {shortenValue(message.content.transaction_hash)}</span>
+                      </div>
+                    ) : null}
                   </div>
                 </article>
               )
@@ -239,7 +231,7 @@ function App() {
 
             <div className="composer-footer">
               <p className="composer-hint">
-                Supports English, Hindi, and Telugu with word-by-word Sanskrit learning.
+                Supports English, Hindi, Telugu, and Kannada with word-by-word Sanskrit learning.
               </p>
               <button type="submit" className="send-button" disabled={isLoading}>
                 {isLoading ? "Sending..." : "Send"}
