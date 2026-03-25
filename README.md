@@ -7,7 +7,7 @@ Contract Address: 0x95d12c98195c126d18a54b3a0de1c62b0c23845e
 
 Pariprashna AI – Enquire Within is an AI-powered chatbot inspired by the teachings of the Bhagavad Gita, designed to help users navigate real-life challenges through timeless wisdom.
 
-
+Link: https://pariprashna-ai-ezoi-4hegl07lf-ketanram-ams-projects.vercel.app/
 Deployed on vercel.✅
 
 It combines:
