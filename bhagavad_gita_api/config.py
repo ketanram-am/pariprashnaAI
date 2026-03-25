@@ -77,7 +77,10 @@ if not settings.SQLALCHEMY_DATABASE_URI:
         "No SQLALCHEMY_DATABASE_URI found. \
         \nUsing default set Sqlite database gita.db. This is not good for running in production!"
     )
+    default_db_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "gita.db")
+    if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
+        default_db_path = os.path.join("/tmp", "gita.db")
     settings.SQLALCHEMY_DATABASE_URI = "sqlite:///{}?{}".format(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)), "gita.db"),
+        default_db_path,
         "check_same_thread=False",
     )
