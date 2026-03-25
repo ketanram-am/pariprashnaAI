@@ -52,7 +52,6 @@ app.include_router(pariprashna_router)
 app.include_router(
     api_router,
     prefix=settings.API_V2_STR,
-    dependencies=[Security(get_api_key, scopes=["openid"])],
 )
 
 # app.add_route(
