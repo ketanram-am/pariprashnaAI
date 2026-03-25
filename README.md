@@ -1,145 +1,226 @@
-<!-- markdownlint-disable -->
-<p align="center">
-  <a href="https://bhagavadgita.io">
-    <img src="https://raw.githubusercontent.com/gita/bhagavad-gita-api/main/.github/gita.png" alt="Logo" width="300">
-  </a>
+# 🕉️ Pariprashna AI – Enquire Within
 
-  <h3 align="center">Bhagavad Gita API</h3>
+An AI-powered, multilingual chatbot that provides **authentic Bhagavad Gita-based guidance** for real-life problems, with verified shloka references and blockchain-backed integrity.
 
-  <p align="center">
-    Code for the BhagavadGita.io API, which is an app built for Gita readers by Gita readers.
-    <br />
-    <br />
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/gita/bhagavad-gita-api">
-    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/bhagavad-gita-api">
-      <a href="https://github.com/gita/bhagavad-gita-api/blob/master/LICENSE">
-    <img alt="LICENSE" src="https://img.shields.io/badge/License-MIT-yellow.svg?maxAge=43200">
-  </a>
-  <a href="https://github.com/gita/bhagavad-gita-api/actions/workflows/deploy.yml"><img alt="Stars" src="https://github.com/gita/bhagavad-gita-api/actions/workflows/deploy.yml/badge.svg"></a>
-  <a href="https://api.bhagavadgita.io/docs"><img src="https://img.shields.io/badge/docs-passing-green" alt="Docs"></a>
-  <a href="https://starcharts.herokuapp.com/gita/bhagavad-gita-api"><img alt="Stars" src="https://img.shields.io/github/stars/gita/bhagavad-gita-api.svg?style=social"></a>
-</p>
+---
 
+## 🚀 Overview
 
-## Usage
+Pariprashna AI is a domain-specific chatbot designed to bridge **modern human challenges** with **timeless wisdom from the Bhagavad Gita**.
 
-The Bhagavad Gita API allows any developer to use content from Gita in their apps.
-This API is built with FastAPI which is based on (and fully compatible with) the open standards for APIs: OpenAPI (previously known as Swagger) and JSON Schema.
+Unlike generic AI chatbots, this system:
 
-Documentation for this API is availaible in two interactive formats:
-- [Swagger UI](https://api.bhagavadgita.io/docs)
-- [Redoc](https://api.bhagavadgita.io/redoc)
+* Grounds every response in **real Bhagavad Gita verses**
+* Displays **chapter and verse references**
+* Provides **practical, actionable advice**
+* Supports **multilingual interaction**
+* Ensures **response integrity using blockchain hashing**
 
-If you are interested in using this API for your application, please
-register an account at
-[RapidAPI](https://rapidapi.com/bhagavad-gita-bhagavad-gita-default/api/bhagavad-gita3)
-where you'll get both the credentials as well as sample code in your language of
-choice. The API is 100% FREE to use.
+---
 
-## Projects
+## 🎯 Key Features
 
-Here is a list of interesting projects using this API.
+### 🧠 Intelligent Problem Understanding
 
-- [BhagavadGita.io](https://bhagavadgita.io)
-- [Android App](https://play.google.com/store/apps/details?id=com.hanuman.bhagavadgita)
+* Uses AI (OpenAI/Gemini) to analyze user input
+* Classifies problems (stress, fear, confusion, discipline, existential)
 
-Have you build something with this API ? Open a "Show and tell" discussion. The maintainers will feature your project on the README if they find it interesting.
+### 📖 Authentic Gita-Based Responses
 
-## Self Hosting
-<!-- markdownlint-enable -->
+* Sanskrit **shloka**
+* 📍 Chapter & Verse reference
+* 📖 Simple meaning
+* 💡 Practical life advice
 
-The official API is free to use for all.
-But If you wish you can self host anywhere you want.
+### 🌍 Multilingual Support
 
-If you want to deploy your own instance,You can deploy
-the API server on your system or VPS.
+* English (EN)
+* हिंदी (HI)
+* ಕನ್ನಡ (KN)
 
-- Using [`pipx`](https://pypa.github.io/pipx/installation/)
-  > **Note** If you dont have `pipx`, just `pip install pipx`
+> Input can be in any language, output is delivered in selected language.
 
-    ```shell
-    pipx run bhagavad-gita-api
-    ```
+---
 
-- Or using [`docker`](https://www.docker.com/)
+### 🎓 Learn Mode (Sanskrit Breakdown)
 
-    ```shell
-    docker run -it -p 8081:8081 --env-file=.env bhagavadgita/bhagavad-gita-api
-    ```
+* Toggle ON to view **word-by-word Sanskrit meaning**
+* Helps users deeply understand each verse
 
-<!-- markdownlint-disable -->
-Now open http://localhost:8081/docs to see docs.
-To stop the server press <kbd>Ctrl</kbd> + <kbd>C</kbd> on your keyboard.
-<!-- markdownlint-enable -->
+---
 
-By default an in-memory SQLite database is used.
-But you configure to use any SQL database of your choice.
-The official version uses PostgreSQL.
+### ⛓ Blockchain Logging
 
-Looking to deploy on a cloud platform ?
-We have detailed docs to deploy to the following platforms:
+* Each response is hashed using SHA-256
+* Stored on EVM-compatible blockchain
+* Ensures **tamper-proof responses**
 
-- [Heroku](https://github.com/gita/bhagavad-gita-api/wiki/Heroku)
-- [Deta](https://github.com/gita/bhagavad-gita-api/wiki/Deta)
-- [Digital Ocean](https://github.com/gita/bhagavad-gita-api/wiki/Digial-Ocean)
+Output includes:
 
-## Configuration
+```
+Hash: ab12cd34ef
+Tx: logged / not logged
+```
 
-Here is the list of supported environment variables.
+---
 
-<!-- markdownlint-disable -->
-| Name                      | Description                           | Default     |
-| ------------------------- | ------------------------------------- | ----------- |
-| `TESTER_API_KEY`          | The API key for testing.              | `None`      |
-| `SQLALCHEMY_DATABASE_URI` | The DSN for your database connection. | `sqlite://` (in memory SQLite db)|
-<!-- markdownlint-enable -->
+## 🏗️ Tech Stack
 
-If you want to configure your deployment even more,
-then please take a look at module [`config.py`](bhagavad_gita_api/config.py).
+### Backend
 
-To set the environment variables, you may simply use a `.env` file where you
-specify the values in the format of `KEY=VALUE`.
+* FastAPI
+* OpenAI / Gemini API
+* deep-translator
+* web3.py
 
-## Development
+### Frontend
 
-Feel free to use the [issue tracker](https://github.com/gita/bhagavad-gita-api/issues)
-for bugs and feature requests.
+* React
+* Tailwind CSS
 
-Looking to contribute code ? PRs are most welcome!
-To get started with developing this API, please read the [contributing guide](.github/CONTRIBUTING.md).
+---
 
-## Community
+## 🧩 Project Structure
 
-Join the [Discord chat server](https://discord.gg/gX8dstApZX) and
-hang out with others in the community.
+```
+pariprashna-ai/
+│
+├── backend/
+│   ├── main.py
+│   ├── gita_data.py
+│   ├── blockchain.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── components/Chat.jsx
+│   │   └── styles.css
+│   └── package.json
+```
 
-You can also use [GitHub Discussions](https://github.com/gita/bhagavad-gita-api/discussions)
-to ask questions or tell us about
-projects you have built using this API.
+---
 
-## Contributors ✨
+## ⚙️ How It Works
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+1. User inputs query (EN / HI / KN)
+2. Input translated → English
+3. AI analyzes and classifies intent
+4. System retrieves relevant Bhagavad Gita verse:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/Gupta-Anubhav12"><img src="https://avatars.githubusercontent.com/u/64721638?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anubhav Gupta</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=Gupta-Anubhav12" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/sanujsood"><img src="https://avatars.githubusercontent.com/u/67072668?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sanuj Sood</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=sanujsood" title="Code">💻</a></td>
-    <td align="center"><a href="http://aahnik.dev"><img src="https://avatars.githubusercontent.com/u/66209958?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aahnik Daw</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=aahnik" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/akshatj2209"><img src="https://avatars.githubusercontent.com/u/57488922?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Akshat Joshi</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=akshatj2209" title="Code">💻</a></td>
-    <td align="center"><a href="https://www.realdevils.com/"><img src="https://avatars.githubusercontent.com/u/60562606?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amritpal Singh</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=Amritpal2001" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/NIKU-SINGH"><img src="https://avatars.githubusercontent.com/u/72123526?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Niku Singh</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=NIKU-SINGH" title="Code">💻</a></td>
-    <td align="center"><a href="https://sreevardhanreddi.github.io/"><img src="https://avatars.githubusercontent.com/u/31174432?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sreevardhanreddi</b></sub></a><br /><a href="https://github.com/gita/bhagavad-gita-api/commits?author=sreevardhanreddi" title="Code">💻</a> <a href="#infra-sreevardhanreddi" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-  </tr>
-</table>
+   * Primary: local dataset
+   * Fallback: AI (strict validation)
+5. Generates structured response:
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+   * Shloka
+   * Reference
+   * Meaning
+   * Advice
+6. Response translated → selected language
+7. Hash generated and logged on blockchain
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+---
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors)
-specification. Contributions of any kind welcome!
+## ▶️ Running Locally
+
+### 🔧 Backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+---
+
+### 💻 Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🌍 Language Toggle (UI)
+
+The app includes **3 fixed toggle buttons**:
+
+```
+[ English ] [ हिंदी ] [ ಕನ್ನಡ ]
+```
+
+* Only one active at a time
+* Default: English
+* Sanskrit text is never translated
+
+---
+
+## 📦 Sample Response
+
+```
+🕉 Shloka:
+देहिनोऽस्मिन्यथा देहे कौमारं यौवनं जरा...
+
+📍 Reference:
+Bhagavad Gita Chapter 2, Verse 13
+
+📖 Meaning:
+Just as the soul passes through childhood, youth, and old age...
+
+💡 Advice:
+Do not fear change. Your true identity is beyond the body.
+
+🔗 Source:
+Based on Bhagavad Gita Chapter 2, Verse 13
+
+Hash: ab12cd34ef
+Tx: logged
+```
+
+---
+
+## ⚠️ Constraints
+
+* No database used
+* No vector search
+* Minimal dependencies
+* Designed for **hackathon demo reliability**
+
+---
+
+## 🎯 Vision
+
+> “We do not generate scripture — we interpret it.”
+
+Pariprashna AI aims to make the Bhagavad Gita:
+
+* Accessible
+* Understandable
+* Practically applicable in daily life
+
+---
+
+## 🙏 Acknowledgment
+
+Inspired by the timeless teachings of the **Bhagavad Gita** and the need to make spiritual wisdom accessible through modern technology.
+
+---
+
+## 📌 Future Improvements
+
+* Voice input & output 🎤
+* Daily shloka recommendations 📅
+* User emotion analytics 📊
+* Expanded verse dataset 📚
+
+---
+
+## 👨‍💻 Author
+
+Built for hackathons with clarity, simplicity, and impact in mind.
+
+---
+
+✨ *Enquire within. The answers are already there.*
