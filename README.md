@@ -1,81 +1,87 @@
-🕉️ Pariprashna AI – Enquire Within
+# 🕉️ Pariprashna AI — Enquire Within
 
-Smart Contract Deployed ✅
-Contract Address: 0x95d12c98195c126d18a54b3a0de1c62b0c23845e
+> *Timeless wisdom for modern challenges, powered by AI and the Bhagavad Gita.*
 
-🚀 Overview
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20on%20Vercel-brightgreen)](https://pariprashna-ai-ezoi-4hegl07lf-ketanram-ams-projects.vercel.app/)
+[![Smart Contract](https://img.shields.io/badge/Contract-0x95d1...845e-blue)](https://pariprashna-ai-ezoi-4hegl07lf-ketanram-ams-projects.vercel.app/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-Pariprashna AI – Enquire Within is an AI-powered chatbot inspired by the teachings of the Bhagavad Gita, designed to help users navigate real-life challenges through timeless wisdom.
+---
 
-Link: https://pariprashna-ai-ezoi-4hegl07lf-ketanram-ams-projects.vercel.app/
-Deployed on vercel.✅
+## Overview
 
-It combines:
+**Pariprashna AI** is an AI-powered chatbot that guides users through real-life challenges using the wisdom of the Bhagavad Gita. Named after the Sanskrit concept of *sincere, deep inquiry*, it responds to emotional and existential questions with relevant shlokas, practical advice, and Sanskrit learning — all logged immutably on the blockchain.
 
-🧠 AI (LLM-based understanding)
-🌐 Multilingual support
-📘 Sanskrit learning mode
-🔗 Blockchain logging (EVM)
+---
 
-Built as a hackathon-ready prototype, the system focuses on simplicity, usability, and meaningful interaction.
+## Features
 
-🎯 Features
-🧠 Context-Aware AI Guidance
-Understands user emotions (stress, confusion, purpose, etc.)
-Provides relevant Bhagavad Gita shlokas
-Gives practical advice, not just philosophy
-🌐 Multilingual Support
+### 🧠 Context-Aware AI Guidance
+- Understands user emotions — stress, confusion, purpose, grief, and more
+- Surfaces the most relevant Bhagavad Gita shloka for each situation
+- Delivers practical, actionable advice alongside philosophical insight
 
-Supports 3 languages:
+### 🌐 Multilingual Support
+Supports four languages with automatic translation:
 
-English 🇬🇧
-Hindi 🇮🇳
-Kannada 🟡
-Telugu
+| Language | Code |
+|----------|------|
+| English  | `en` |
+| Hindi    | `hi` |
+| Kannada  | `kn` |
+| Telugu   | `te` |
 
-Flow:
+Flow: `User Input → Translate → AI Processing → Translate Back → Output`
 
-User Input → Translate → AI Processing → Translate Back → Output
-📘 Learn Mode (Unique Feature)
-Toggle ON/OFF
-When ON:
-Provides word-by-word Sanskrit breakdown
-When OFF:
-Keeps response concise
-🔗 Blockchain Logging (EVM Compatible)
+### 📘 Learn Mode
+Toggle Sanskrit learning on or off:
+- **ON** — word-by-word Sanskrit breakdown with meanings
+- **OFF** — concise shloka and advice only
 
-Each response is hashed:
+### 🔗 Blockchain Logging (EVM)
+Every response is cryptographically logged:
+1. Hash computed: `keccak256(user_input + response)`
+2. Logged via smart contract on an EVM-compatible chain
+3. Transaction hash (`tx_hash`) returned in the response
 
-keccak(user_input + response)
-Logged on blockchain via smart contract
-Returns transaction hash (tx_hash)
-💬 Chat Interface
-Clean, modern UI
-Card-based response layout:
-🕉 Shloka
-📖 Meaning
-📚 Word Meaning (Learn Mode)
-💡 Advice
-🧱 Tech Stack
-Backend
-FastAPI
-OpenAI / Gemini (LLM)
-deep-translator
-web3.py
-Frontend
-React
-Tailwind CSS
-Blockchain
-EVM-compatible chain (Shardeum / testnet)
-📦 API Endpoints
-🔹 POST /chat
-Request:
+**Contract Address:** `0x95d12c98195c126d18a54b3a0de1c62b0c23845e`
+
+### 💬 Chat Interface
+Clean, card-based UI for each response:
+- 🕉 Shloka
+- 📖 Meaning
+- 📚 Word Meaning *(Learn Mode only)*
+- 💡 Advice
+
+---
+
+## Tech Stack
+
+| Layer      | Technology                        |
+|------------|-----------------------------------|
+| Frontend   | React, Tailwind CSS               |
+| Backend    | FastAPI (Python)                  |
+| AI/LLM     | OpenAI / Gemini                   |
+| Translation| deep-translator                   |
+| Blockchain | web3.py, EVM (Shardeum / testnet) |
+
+---
+
+## API Reference
+
+### `POST /chat`
+
+**Request:**
+```json
 {
   "message": "I feel anxious about my future",
   "language": "en",
   "learn_mode": true
 }
-Response:
+```
+
+**Response:**
+```json
 {
   "shloka": "...",
   "meaning": "...",
@@ -83,83 +89,123 @@ Response:
   "advice": "...",
   "tx_hash": "0x..."
 }
-🔹 POST /blockchain/log-chat
-Request:
+```
+
+---
+
+### `POST /blockchain/log-chat`
+
+**Request:**
+```json
 {
   "hash": "string"
 }
-Response:
+```
+
+**Response:**
+```json
 {
   "tx_hash": "0x..."
 }
-⚙️ Setup Instructions
-1️⃣ Clone Repository
+```
+
+---
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
 git clone <your-repo-url>
 cd pariprashna-ai
-2️⃣ Backend Setup
-cd backend
+```
 
+### 2. Backend Setup
+
+```bash
+cd backend
 python -m venv venv
-venv\Scripts\activate   # Windows
+source venv/bin/activate        # macOS/Linux
+# venv\Scripts\activate         # Windows
 
 pip install -r requirements.txt
+```
 
-Create .env file:
+Create a `.env` file:
 
-OPENAI_API_KEY=your_key
-BLOCKCHAIN_RPC_URL=your_rpc
+```env
+OPENAI_API_KEY=your_openai_key
+BLOCKCHAIN_RPC_URL=your_rpc_url
 PRIVATE_KEY=your_private_key
 CONTRACT_ADDRESS=0x95d12c98195c126d18a54b3a0de1c62b0c23845e
 CHAIN_ID=your_chain_id
+```
 
-Run backend:
+Start the server:
 
+```bash
 uvicorn main:app --reload --port 8081
-3️⃣ Frontend Setup
-cd frontend
+```
 
+### 3. Frontend Setup
+
+```bash
+cd frontend
 npm install
 npm run dev
+```
 
-Open:
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-http://localhost:5173
-🎨 UI Design
+---
 
-Light theme with warm colors:
+## UI Design
 
-Background: #FFF7ED
-Primary: #F97316
-Accent: #FDBA74
-Text: #1F2937
-🧪 Demo Flow (Recommended)
+| Token       | Value     |
+|-------------|-----------|
+| Background  | `#FFF7ED` |
+| Primary     | `#F97316` |
+| Accent      | `#FDBA74` |
+| Text        | `#1F2937` |
 
-Ask emotional question:
+Warm, minimal, and distraction-free — designed to feel grounding.
 
-“I feel anxious about my future”
+---
 
-Show AI response
-Enable Learn Mode
-Ask again → show Sanskrit breakdown
-Switch language (Hindi/Kannada)
-Show blockchain tx_hash
-⚠️ Notes
-This is a prototype, not production-ready
-No vector DB / embeddings used
-Focus is on simplicity + demo impact
-🌟 Future Improvements
-Add semantic search for shlokas
-Voice input/output
-User journaling + history
-Better blockchain indexing
-🙏 Inspiration
+## Recommended Demo Flow
 
-Inspired by the timeless wisdom of the Bhagavad Gita and the concept of Pariprashna — deep, sincere inquiry.
+1. Ask an emotional question: *"I feel anxious about my future"*
+2. Review the AI response (shloka + advice)
+3. Enable **Learn Mode** and ask again → see Sanskrit word breakdown
+4. Switch language to Hindi or Kannada
+5. Note the `tx_hash` in the response — the interaction is on-chain
 
-👨‍💻 Author
+---
 
-Built for hackathon by a developer exploring:
+## Roadmap
 
-AI
-Spirituality
-Real-world impact
+- [ ] Semantic search over shloka embeddings (vector DB)
+- [ ] Voice input and text-to-speech output
+- [ ] User journaling and conversation history
+- [ ] On-chain indexing and query support
+- [ ] Mobile app (React Native)
+
+---
+
+## Notes
+
+This is a hackathon prototype focused on simplicity and demo impact. It does not use vector embeddings or production-grade infrastructure yet.
+
+---
+
+## Inspiration
+
+*"Pariprashna"* — deep, sincere inquiry — is the act of approaching a teacher with genuine questions. This project brings that spirit into the age of AI, making the Gita's wisdom accessible to anyone, anywhere, in their own language.
+
+---
+
+## Author
+
+Built for a hackathon by a developer at the intersection of **AI**, **spirituality**, and **real-world impact**.
+
+*Contributions and feedback welcome.*
